@@ -44,9 +44,9 @@ const SignIn = () => {
   };
 
   return (
-    <div style={{ height: "100vh" }} className="flex mx-6 justify-center">
+    <div style={{ height: "100vh" }} className="flex mx-8 justify-center">
       {/* container */}
-      <div className="flex flex-col my-auto">
+      <div className="flex flex-col my-8  max-w-96">
         <h1
           className="font-bold text-left text-3xl leading-10"
           style={{ color: "#1E232C" }}
@@ -65,7 +65,7 @@ const SignIn = () => {
           />
           <FormInput
             placeholder="Entre your password"
-            type="password" 
+            type="password"
             required
             onChange={handleChange}
             name="password"
