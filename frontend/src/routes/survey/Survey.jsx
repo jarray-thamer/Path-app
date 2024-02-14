@@ -1,16 +1,41 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import { useState } from "react";
+import OtherIssuePopup from "../../components/popups/OtherIssuePopup";
 
 const Survey = () => {
+  const [showPopup, setShowPopup] = useState(false);
   const [choice, setChoice] = useState("");
-  const handleCheck = () => {
-    
-  }
+
+  const toggleShowPopup = () => {
+    setShowPopup(!showPopup);
+  };
+
+  const handleSubmit = () => {
+    if (choice === "other") {
+      setShowPopup(true);
+      setChoice("");
+    }
+  };
 
   return (
-    <div style={{ height: "100vh" }} className="flex mx-8 justify-center">
-      <div className="flex flex-col my-8 max-w-96">
+    <div
+      className={
+        "relative flex mx-auto w-screen h-screen p-5 " +
+        (showPopup ? "overflow-hidden" : "")
+      }
+    >
+      {showPopup && (
+        <div
+          onClick={toggleShowPopup}
+          className="overflow-hidden flex justify-center top-0 left-0 fixed bg-black bg-opacity-80 w-full h-full "
+        >
+          <div className="flex justify-center opacity-100 fixed top-72">
+            <OtherIssuePopup toggleShowPopup={toggleShowPopup} />
+          </div>
+        </div>
+      )}
+      <div className="flex flex-col my-8 mx-auto">
         <h1
           className="font-bold text-left text-3xl leading-10"
           style={{ color: "#1E232C" }}
@@ -33,7 +58,7 @@ const Survey = () => {
               />
               <label
                 htmlFor="portfolio"
-                onClick={handleCheck}
+                onClick={() => setChoice("portfolio")}
                 style={{ border: "1px solid #022F5E" }}
                 className="inline-flex text-notchecked items-center justify-between w-full p-5 rounded-lg cursor-pointer peer-checked:text-white peer-checked:bg-checked"
               >
@@ -69,6 +94,7 @@ const Survey = () => {
               />
               <label
                 htmlFor="price"
+                onClick={() => setChoice("price")}
                 style={{ border: "1px solid #022F5E" }}
                 className="inline-flex text-notchecked items-center justify-between w-full p-5 rounded-lg cursor-pointer peer-checked:text-white peer-checked:bg-checked"
               >
@@ -104,6 +130,7 @@ const Survey = () => {
               />
               <label
                 htmlFor="client"
+                onClick={() => setChoice("client")}
                 style={{ border: "1px solid #022F5E" }}
                 className="inline-flex text-notchecked items-center justify-between w-full p-5 rounded-lg cursor-pointer peer-checked:text-white peer-checked:bg-checked"
               >
@@ -139,6 +166,7 @@ const Survey = () => {
               />
               <label
                 htmlFor="payment"
+                onClick={() => setChoice("payment")}
                 style={{ border: "1px solid #022F5E" }}
                 className="inline-flex text-notchecked items-center justify-between w-full p-5 rounded-lg cursor-pointer peer-checked:text-white peer-checked:bg-checked"
               >
@@ -171,9 +199,11 @@ const Survey = () => {
                 value="other"
                 className="hidden peer"
                 required
+                checked={choice === "other" ? true : false}
               />
               <label
                 htmlFor="other"
+                onClick={() => setChoice("other")}
                 style={{ border: "1px solid #022F5E" }}
                 className="inline-flex text-notchecked items-center justify-between w-full p-5 rounded-lg cursor-pointer peer-checked:text-white peer-checked:bg-checked"
               >
@@ -199,6 +229,7 @@ const Survey = () => {
         </div>
         <button
           type="submit"
+          onClick={handleSubmit}
           style={{ backgroundColor: "#022F5E", color: "white" }}
           className=" my-3 py-5 w-full rounded-lg self-center font-semibold hover:opacity-85"
         >
