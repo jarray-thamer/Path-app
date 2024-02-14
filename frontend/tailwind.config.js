@@ -7,6 +7,7 @@ export default {
       backgroundImage: {
         standgreen: "url(greenstandbg.png)",
         standpurple: "url(purplestandbg.png)",
+        pathbg: "url(pathbg.png)",
       },
     },
   },

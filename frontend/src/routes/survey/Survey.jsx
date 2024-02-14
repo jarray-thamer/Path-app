@@ -1,7 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
-import { IoCheckmark } from "react-icons/io5";
+
+import { useState } from "react";
 
 const Survey = () => {
+  const [choice, setChoice] = useState("");
+  const handleCheck = () => {
+    
+  }
+
   return (
     <div style={{ height: "100vh" }} className="flex mx-8 justify-center">
       <div className="flex flex-col my-8 max-w-96">
@@ -27,6 +33,7 @@ const Survey = () => {
               />
               <label
                 htmlFor="portfolio"
+                onClick={handleCheck}
                 style={{ border: "1px solid #022F5E" }}
                 className="inline-flex text-notchecked items-center justify-between w-full p-5 rounded-lg cursor-pointer peer-checked:text-white peer-checked:bg-checked"
               >

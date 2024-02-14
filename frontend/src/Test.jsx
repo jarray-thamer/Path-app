@@ -1,11 +1,8 @@
+import OtherIssuePopup from "./components/popups/OtherIssuePopup";
 import "./teststyle.css";
 
 const Test = () => {
-  return (
-    <div className=" w-full flex justify-center">
-      <h1>Hello</h1>
-    </div>
-  );
+  return <OtherIssuePopup />;
 };
 
 export default Test;

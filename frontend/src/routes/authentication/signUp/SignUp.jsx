@@ -1,12 +1,8 @@
 import { useState } from "react";
 import FormInput from "../../../components/formInput/FormInput";
 
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-  signInWithGooglePopup,
-} from "../../../utils/firebase/firebase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const defaultFormFields = {
   displayName: "",
@@ -18,6 +14,7 @@ const defaultFormFields = {
 const SignUp = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
+  const navigate = useNavigate();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -30,21 +27,15 @@ const SignUp = () => {
       alert("passwords do not match");
       return;
     }
-
-    try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await createUserDocumentFromAuth(user, { displayName });
-      resetFormFields();
-    } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("Cannot create user, email already in use");
-      } else {
-        console.log("user creation encountered an error", error);
-      }
-    }
+    axios
+      .post("/register", formFields)
+      .then((res) => {
+        if (res.data === "Email already exist !") {
+          alert("Email is already exist !");
+        } else navigate("/survey");
+      })
+      .catch((err) => console.log(err));
+    resetFormFields();
   };
 
   const handleChange = (event) => {
@@ -53,12 +44,8 @@ const SignUp = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
-  };
-
   return (
-    <div style={{ height: "100vh" }} className="flex mx-8 justify-center">
+    <div className="h-lvh w-lvw flex mx-8 justify-center">
       {/* container */}
       <div className="flex flex-col my-8 max-w-96 ">
         <h1
@@ -114,7 +101,6 @@ const SignUp = () => {
               Register
             </button>
             <button
-              onClick={signInWithGoogle}
               style={{ border: "1px solid #022F5E" }}
               className=" my-4 py-5 w-full rounded-lg self-center font-semibold hover:opacity-85"
             >
@@ -153,7 +139,7 @@ const SignUp = () => {
           <p className=" font-medium text-base">
             Already have an account?
             <Link
-              to="/signin"
+              to="/login"
               style={{ color: "#5151fc" }}
               className=" font-bold text-base hover:opacity-85 cursor-pointer"
             >

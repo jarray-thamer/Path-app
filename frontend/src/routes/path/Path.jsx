@@ -21,7 +21,7 @@ const path = () => {
       </div>
       {/* Path container */}
       <div
-        className="flex flex-col w-full mt-6 justify-between h-full"
+        className="path flex flex-col w-full mt-6 justify-between h-full bg-pathbg bg-no-repeat bg-contain bg-center"
         style={{ border: "3px blue solid" }}
       >
         <div
@@ -31,13 +31,13 @@ const path = () => {
           <LockStand />
         </div>
         <div
-          className="flex justify-start"
+          className="flex justify-start ml-10"
           style={{ border: "3px purple solid" }}
         >
           <LockStand />
         </div>
         <div
-          className="flex justify-end "
+          className="flex justify-end mr-10"
           style={{ border: "3px orange solid" }}
         >
           <Stand level={"2"} topic={"Client"} />

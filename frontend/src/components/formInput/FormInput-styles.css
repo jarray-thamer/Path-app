@@ -17,7 +17,7 @@
   top: 0;
   right: 0;
   cursor: pointer;
-  translate: -1em 2.5em;
+  translate: -1em 2.3em;
 }
 
 .group .form-input::placeholder {

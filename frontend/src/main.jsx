@@ -2,15 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
-import { UserProvider } from "./context/userContext";
 import "./index.css";
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:5555";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserProvider>
-        <App />
-      </UserProvider>
+      <App />
     </BrowserRouter>
   </React.StrictMode>
 );
