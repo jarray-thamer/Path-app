@@ -1,20 +1,34 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OtherIssuePopup from "../../components/popups/OtherIssuePopup";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/UserContext";
 
 const Survey = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [choice, setChoice] = useState("");
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   const toggleShowPopup = () => {
     setShowPopup(!showPopup);
   };
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    if (!auth.user) {
+      navigate("/login");
+    }
+  }, []);
+
+  const handleSubmit = async () => {
     if (choice === "other") {
       setShowPopup(true);
       setChoice("");
+    } else {
+      const res = await auth?.setSurvey(choice);
+      console.log(res);
+      navigate(`/path/${res.user.id}`);
     }
   };
 
@@ -28,10 +42,10 @@ const Survey = () => {
       {showPopup && (
         <div
           onClick={toggleShowPopup}
-          className="overflow-hidden flex justify-center top-0 left-0 fixed bg-black bg-opacity-80 w-full h-full "
+          className=" cursor-pointer overflow-hidden flex justify-center top-0 left-0 fixed bg-black bg-opacity-80 w-full h-full "
         >
-          <div className="flex justify-center opacity-100 fixed top-72">
-            <OtherIssuePopup toggleShowPopup={toggleShowPopup} />
+          <div className=" cursor-default flex justify-center opacity-100 fixed top-72">
+            <OtherIssuePopup />
           </div>
         </div>
       )}
@@ -230,8 +244,8 @@ const Survey = () => {
         <button
           type="submit"
           onClick={handleSubmit}
-          style={{ backgroundColor: "#022F5E", color: "white" }}
-          className=" my-3 py-5 w-full rounded-lg self-center font-semibold hover:opacity-85"
+          style={{ backgroundColor: "#022F5E" }}
+          className="text-white text-base my-3 py-5 w-full rounded-lg self-center font-semibold "
         >
           Show Path
         </button>

@@ -4,26 +4,19 @@ import SignIn from "./routes/authentication/signIn/SignIn";
 import ForgetPassword from "./routes/authentication/forgetPassword/ForgetPassword";
 import Survey from "./routes/survey/Survey";
 import Path from "./routes/path/Path";
-import Test from "./Test";
-
-const Home = () => {
-  return (
-    <div>
-      <h1>I am the home page !</h1>
-    </div>
-  );
-};
+import Admin from "./routes/admin/Admin";
+import OnBoarding from "./routes/home/OnBoarding";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<OnBoarding />} />
       <Route path="/register" element={<SignUp />} />
       <Route path="/login" element={<SignIn />} />
       <Route path="/survey" element={<Survey />} />
-      <Route path="/path" element={<Path />} />
+      <Route path="/path/:id" element={<Path />} />
       <Route path="/forgetpassword" element={<ForgetPassword />} />
-      <Route path="/test" element={<Test />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 }

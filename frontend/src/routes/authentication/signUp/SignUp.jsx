@@ -3,6 +3,7 @@ import FormInput from "../../../components/formInput/FormInput";
 
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../../context/UserContext";
 
 const defaultFormFields = {
   displayName: "",
@@ -14,7 +15,7 @@ const defaultFormFields = {
 const SignUp = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-  const navigate = useNavigate();
+  const auth = useAuth();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -27,14 +28,7 @@ const SignUp = () => {
       alert("passwords do not match");
       return;
     }
-    axios
-      .post("/register", formFields)
-      .then((res) => {
-        if (res.data === "Email already exist !") {
-          alert("Email is already exist !");
-        } else navigate("/survey");
-      })
-      .catch((err) => console.log(err));
+    await auth?.signup(formFields);
     resetFormFields();
   };
 
@@ -45,7 +39,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="h-lvh w-lvw flex mx-8 justify-center">
+    <div className="h-lvh w-lvw flex mx-auto justify-center p-5">
       {/* container */}
       <div className="flex flex-col my-8 max-w-96 ">
         <h1

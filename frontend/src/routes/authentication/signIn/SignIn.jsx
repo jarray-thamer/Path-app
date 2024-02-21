@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import FormInput from "../../../components/formInput/FormInput";
 import PasswordInput from "../../../components/formInput/PasswordInput/PasswordInput";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../../context/UserContext";
 
 const defaultFormFields = {
   email: "",
@@ -14,7 +14,7 @@ const defaultFormFields = {
 const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  const navigate = useNavigate();
+  const auth = useAuth();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -22,19 +22,8 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formFields);
-    axios
-      .post("/login", formFields)
-      .then((res) => {
-        console.log(res);
-        if (res.data === "Login successfully") {
-          navigate("/survey");
-          resetFormFields();
-        } else {
-          alert(res.data);
-        }
-      })
-      .catch((err) => console.log(err));
+    await auth?.login(formFields);
+    resetFormFields();
   };
 
   const handleChange = (event) => {
@@ -43,7 +32,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className=" h-lvh w-lvw flex mx-8 justify-center">
+    <div className="h-lvh w-lvw flex mx-auto justify-center p-5">
       {/* container */}
       <div className="flex flex-col my-8  max-w-96">
         <h1
